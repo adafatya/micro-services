@@ -1,4 +1,4 @@
-module github.com/adafatya/microservices/webapi
+module github.com/adafatya/micro-services/webapi
 
 go 1.22.4
 

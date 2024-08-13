@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/adafatya/microservices/webapi/internal/http/controllers"
+	"github.com/adafatya/micro-services/webapi/internal/http/controllers"
 	"github.com/gin-gonic/gin"
 )
 

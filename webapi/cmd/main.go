@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/adafatya/microservices/webapi/internal/config"
+	"github.com/adafatya/micro-services/webapi/internal/config"
 )
 
 func main() {
