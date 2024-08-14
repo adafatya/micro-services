@@ -5,9 +5,13 @@ import (
 )
 
 func main() {
+	authServiceClient := config.NewAuthServiceClient()
+
 	app := config.NewGinApp()
+
 	config.Bootstrap(&config.BootstrapConfig{
-		App: app,
+		App:               app,
+		AuthServiceClient: authServiceClient,
 	})
 
 	app.Run()
