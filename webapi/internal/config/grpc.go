@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/adafatya/micro-services/webapi/pkg/util"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
@@ -8,7 +9,8 @@ import (
 )
 
 func NewAuthServiceClient() pb.AuthServiceClient {
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	authServiceAddr := util.GetEnv("AUTH_SERVICE_ADDR", "")
+	conn, err := grpc.NewClient(authServiceAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		panic(err)
 	}
