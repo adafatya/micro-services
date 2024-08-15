@@ -32,13 +32,28 @@ func (u *UserHandler) Register(c *gin.Context) {
 	msg, err := u.UserService.Register(c, data)
 	if err != nil {
 		log.Println(err)
-		c.JSON(http.StatusInternalServerError, dto.UserRegisterResponse{
-			Message: msg,
+		c.JSON(http.StatusInternalServerError, msg)
+		return
+	}
+
+	c.JSON(http.StatusOK, msg)
+}
+
+func (u *UserHandler) Login(c *gin.Context) {
+	var data dto.UserLoginRequest
+	if err := c.ShouldBind(&data); err != nil {
+		c.JSON(http.StatusBadRequest, dto.UserRegisterResponse{
+			Message: "Data tidak memenuhi format!",
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK, dto.UserRegisterResponse{
-		Message: msg,
-	})
+	resp, err := u.UserService.Login(c, data)
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, resp)
+		return
+	}
+
+	c.JSON(http.StatusOK, resp)
 }

@@ -18,7 +18,7 @@ func NewUserService(authServiceClient pb.AuthServiceClient) *UserService {
 	}
 }
 
-func (u *UserService) Register(ctx context.Context, data dto.UserRegisterRequest) (string, error) {
+func (u *UserService) Register(ctx context.Context, data dto.UserRegisterRequest) (dto.UserRegisterResponse, error) {
 	user := models.User{
 		Email:       data.Email,
 		Pass:        data.Password,
@@ -34,5 +34,15 @@ func (u *UserService) Register(ctx context.Context, data dto.UserRegisterRequest
 	}
 
 	resp, err := u.AuthServiceClient.Register(ctx, in)
-	return resp.GetMessage(), err
+	return dto.UserRegisterResponse{Message: resp.GetMessage()}, err
+}
+
+func (u *UserService) Login(ctx context.Context, data dto.UserLoginRequest) (*dto.UserLoginResponse, error) {
+	in := &pb.LoginRequest{
+		Email:    &data.Email,
+		Password: &data.Password,
+	}
+
+	resp, err := u.AuthServiceClient.Login(ctx, in)
+	return &dto.UserLoginResponse{Message: resp.GetMessage(), Token: resp.GetToken()}, err
 }
