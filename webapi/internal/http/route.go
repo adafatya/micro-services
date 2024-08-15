@@ -16,4 +16,5 @@ func (config *RouteConfig) Setup() {
 
 	v1 := config.App.Group("api/v1")
 	v1.POST("register", config.UserHandler.Register)
+	v1.POST("login", config.UserHandler.Login)
 }
