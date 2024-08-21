@@ -33,3 +33,19 @@ func (p *ProductHandler) AddProduct(c *gin.Context) {
 
 	c.JSON(http.StatusOK, resp)
 }
+
+func (p *ProductHandler) GetProducts(c *gin.Context) {
+	var query dto.GetProductsRequest
+
+	if err := c.ShouldBindQuery(&query); err != nil {
+		c.JSON(http.StatusBadRequest, dto.GetProductsResponse{Message: "Gagal mendapatkan produk: query tidak sesuai!"})
+		return
+	}
+
+	resp, err := p.ProductService.GetProducts(c, query)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, resp)
+	}
+
+	c.JSON(http.StatusOK, resp)
+}

@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	InventoryService_AddProduct_FullMethodName     = "/inventoryservice.InventoryService/AddProduct"
-	InventoryService_GetAllProducts_FullMethodName = "/inventoryservice.InventoryService/GetAllProducts"
+	InventoryService_AddProduct_FullMethodName  = "/inventoryservice.InventoryService/AddProduct"
+	InventoryService_GetProducts_FullMethodName = "/inventoryservice.InventoryService/GetProducts"
 )
 
 // InventoryServiceClient is the client API for InventoryService service.
@@ -28,7 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type InventoryServiceClient interface {
 	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*MessageResponse, error)
-	GetAllProducts(ctx context.Context, in *GetAllProductsRequest, opts ...grpc.CallOption) (*GetProductsResponse, error)
+	GetProducts(ctx context.Context, in *GetProductsRequest, opts ...grpc.CallOption) (*GetProductsResponse, error)
 }
 
 type inventoryServiceClient struct {
@@ -49,10 +49,10 @@ func (c *inventoryServiceClient) AddProduct(ctx context.Context, in *AddProductR
 	return out, nil
 }
 
-func (c *inventoryServiceClient) GetAllProducts(ctx context.Context, in *GetAllProductsRequest, opts ...grpc.CallOption) (*GetProductsResponse, error) {
+func (c *inventoryServiceClient) GetProducts(ctx context.Context, in *GetProductsRequest, opts ...grpc.CallOption) (*GetProductsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetProductsResponse)
-	err := c.cc.Invoke(ctx, InventoryService_GetAllProducts_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, InventoryService_GetProducts_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (c *inventoryServiceClient) GetAllProducts(ctx context.Context, in *GetAllP
 // for forward compatibility.
 type InventoryServiceServer interface {
 	AddProduct(context.Context, *AddProductRequest) (*MessageResponse, error)
-	GetAllProducts(context.Context, *GetAllProductsRequest) (*GetProductsResponse, error)
+	GetProducts(context.Context, *GetProductsRequest) (*GetProductsResponse, error)
 	mustEmbedUnimplementedInventoryServiceServer()
 }
 
@@ -78,8 +78,8 @@ type UnimplementedInventoryServiceServer struct{}
 func (UnimplementedInventoryServiceServer) AddProduct(context.Context, *AddProductRequest) (*MessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddProduct not implemented")
 }
-func (UnimplementedInventoryServiceServer) GetAllProducts(context.Context, *GetAllProductsRequest) (*GetProductsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAllProducts not implemented")
+func (UnimplementedInventoryServiceServer) GetProducts(context.Context, *GetProductsRequest) (*GetProductsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProducts not implemented")
 }
 func (UnimplementedInventoryServiceServer) mustEmbedUnimplementedInventoryServiceServer() {}
 func (UnimplementedInventoryServiceServer) testEmbeddedByValue()                          {}
@@ -120,20 +120,20 @@ func _InventoryService_AddProduct_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _InventoryService_GetAllProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAllProductsRequest)
+func _InventoryService_GetProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProductsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InventoryServiceServer).GetAllProducts(ctx, in)
+		return srv.(InventoryServiceServer).GetProducts(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InventoryService_GetAllProducts_FullMethodName,
+		FullMethod: InventoryService_GetProducts_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InventoryServiceServer).GetAllProducts(ctx, req.(*GetAllProductsRequest))
+		return srv.(InventoryServiceServer).GetProducts(ctx, req.(*GetProductsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -150,8 +150,8 @@ var InventoryService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _InventoryService_AddProduct_Handler,
 		},
 		{
-			MethodName: "GetAllProducts",
-			Handler:    _InventoryService_GetAllProducts_Handler,
+			MethodName: "GetProducts",
+			Handler:    _InventoryService_GetProducts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

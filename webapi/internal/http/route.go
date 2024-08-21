@@ -20,6 +20,8 @@ func (config *RouteConfig) Setup() {
 	v1.POST("register", config.UserHandler.Register)
 	v1.POST("login", config.UserHandler.Login)
 
+	v1.GET("products", config.ProductHandler.GetProducts)
+
 	admin := v1.Group("admin")
 	admin.Use(middleware.AdminOnly())
 	admin.POST("product", config.ProductHandler.AddProduct)

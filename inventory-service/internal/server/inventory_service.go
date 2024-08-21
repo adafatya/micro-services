@@ -44,3 +44,14 @@ func (s *InventoryServiceServer) AddProduct(ctx context.Context, in *pb.AddProdu
 
 	return &pb.MessageResponse{Message: &msg}, err
 }
+
+func (s *InventoryServiceServer) GetProducts(ctx context.Context, in *pb.GetProductsRequest) (*pb.GetProductsResponse, error) {
+	msg := "Berhasil mendapatkan daftar produk!"
+
+	products, err := s.ProductService.GetProducts(ctx, in)
+	if err != nil {
+		msg = fmt.Sprintf("Gagal mendapatkan produk: %v", err.Error())
+	}
+
+	return &pb.GetProductsResponse{Message: &msg, Products: products}, err
+}
