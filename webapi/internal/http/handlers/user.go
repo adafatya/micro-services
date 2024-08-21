@@ -23,7 +23,7 @@ func (u *UserHandler) Register(c *gin.Context) {
 	var data dto.UserRegisterRequest
 
 	if err := c.ShouldBind(&data); err != nil {
-		c.JSON(http.StatusBadRequest, dto.UserRegisterResponse{
+		c.JSON(http.StatusBadRequest, dto.MessageResponse{
 			Message: "Data tidak memenuhi format!",
 		})
 		return
@@ -42,7 +42,7 @@ func (u *UserHandler) Register(c *gin.Context) {
 func (u *UserHandler) Login(c *gin.Context) {
 	var data dto.UserLoginRequest
 	if err := c.ShouldBind(&data); err != nil {
-		c.JSON(http.StatusBadRequest, dto.UserRegisterResponse{
+		c.JSON(http.StatusBadRequest, dto.MessageResponse{
 			Message: "Data tidak memenuhi format!",
 		})
 		return

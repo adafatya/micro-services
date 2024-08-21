@@ -5,17 +5,30 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	pb "github.com/adafatya/micro-services/webapi/internal/proto/authservice"
+	"github.com/adafatya/micro-services/webapi/internal/proto/authservice"
+	"github.com/adafatya/micro-services/webapi/internal/proto/inventoryservice"
 )
 
-func NewAuthServiceClient() pb.AuthServiceClient {
+func NewAuthServiceClient() authservice.AuthServiceClient {
 	authServiceAddr := util.GetEnv("AUTH_SERVICE_ADDR", "")
 	conn, err := grpc.NewClient(authServiceAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		panic(err)
 	}
 
-	c := pb.NewAuthServiceClient(conn)
+	c := authservice.NewAuthServiceClient(conn)
+
+	return c
+}
+
+func NewInventoryServiceClient() inventoryservice.InventoryServiceClient {
+	inventoryServiceAddr := util.GetEnv("INVENTORY_SERVICE_ADDR", "")
+	conn, err := grpc.NewClient(inventoryServiceAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		panic(err)
+	}
+
+	c := inventoryservice.NewInventoryServiceClient(conn)
 
 	return c
 }

@@ -1,0 +1,40 @@
+edition = "2023";
+
+option go_package = "./inventoryservice";
+
+package inventoryservice;
+
+service InventoryService {
+    rpc AddProduct (AddProductRequest) returns (MessageResponse) {}
+    rpc GetAllProducts (GetAllProductsRequest) returns (GetProductsResponse) {}
+}
+
+message ProductImage {
+    string ImagePath = 1;
+    bool IsThumbnail = 2;
+}
+
+message AddProductRequest {
+    string ProductName = 1;
+    string Description = 2;
+    int32 Price = 3;
+    int32 Quantity = 4;
+    repeated ProductImage ProductImages = 5;
+}
+
+message MessageResponse {
+    string Message = 1;
+}
+
+message Product {
+    string ProductName = 1;
+    int32 Price = 2;
+    string ThumbnailPath = 3;
+}
+
+message GetAllProductsRequest {}
+
+message GetProductsResponse {
+    string Message = 1;
+    repeated Product Products = 2;
+}
