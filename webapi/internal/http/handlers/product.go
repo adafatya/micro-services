@@ -45,6 +45,7 @@ func (p *ProductHandler) GetProducts(c *gin.Context) {
 	resp, err := p.ProductService.GetProducts(c, query)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, resp)
+		return
 	}
 
 	c.JSON(http.StatusOK, resp)
