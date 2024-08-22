@@ -21,10 +21,14 @@ func (config *RouteConfig) Setup() {
 	v1.POST("register", config.UserHandler.Register)
 	v1.POST("login", config.UserHandler.Login)
 
+
+	v1.GET("products", config.ProductHandler.GetProducts)
+
 	login := v1
 	login.Use(middleware.LoggedIn())
 	login.POST("user/address", config.UserAddressHandler.AddUserAddress)
 	login.GET("user/addresses", config.UserAddressHandler.GetUserAddresses)
+
 
 	admin := v1.Group("admin")
 	admin.Use(middleware.AdminOnly())

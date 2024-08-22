@@ -66,3 +66,31 @@ func (p *ProductService) AddProduct(ctx context.Context, data dto.AddProductRequ
 	resp, err := p.InventoryServiceClient.AddProduct(ctx, in)
 	return dto.MessageResponse{Message: resp.GetMessage()}, err
 }
+
+func (p *ProductService) GetProducts(ctx context.Context, query dto.GetProductsRequest) (dto.GetProductsResponse, error) {
+	offset := query.GetOffset()
+	in := &pb.GetProductsRequest{
+		Limit:   &query.Limit,
+		Offset:  &offset,
+		Keyword: &query.Keyword,
+		Order:   &query.Order,
+	}
+
+	resp, err := p.InventoryServiceClient.GetProducts(ctx, in)
+	if err != nil {
+		return dto.GetProductsResponse{Message: resp.GetMessage(), Products: nil}, err
+	}
+
+	var products dto.GetProductsResponse
+	products.Message = resp.GetMessage()
+	for _, product := range resp.Products {
+		products.Products = append(products.Products, dto.ProductResponse{
+			ID:            product.GetID(),
+			ProductName:   product.GetProductName(),
+			Price:         product.GetPrice(),
+			ThumbnailPath: product.GetThumbnailPath(),
+		})
+	}
+
+	return products, nil
+}

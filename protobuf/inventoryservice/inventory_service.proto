@@ -6,7 +6,7 @@ package inventoryservice;
 
 service InventoryService {
     rpc AddProduct (AddProductRequest) returns (MessageResponse) {}
-    rpc GetAllProducts (GetAllProductsRequest) returns (GetProductsResponse) {}
+    rpc GetProducts (GetProductsRequest) returns (GetProductsResponse) {}
 }
 
 message ProductImage {
@@ -27,12 +27,18 @@ message MessageResponse {
 }
 
 message Product {
-    string ProductName = 1;
-    int32 Price = 2;
-    string ThumbnailPath = 3;
+    int32 ID = 1;
+    string ProductName = 2;
+    int32 Price = 3;
+    string ThumbnailPath = 4;
 }
 
-message GetAllProductsRequest {}
+message GetProductsRequest {
+    int32 Limit = 1;
+    int32 Offset = 2;
+    string Keyword = 3;
+    string Order = 4;
+}
 
 message GetProductsResponse {
     string Message = 1;
