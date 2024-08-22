@@ -42,3 +42,25 @@ func (u *UserAddressService) AddAddress(ctx context.Context, data *pb.AddUserAdd
 	alamat := userAddress.Alamat + ", " + userAddress.Kelurahan + ", " + userAddress.Kecamatan + ", " + userAddress.Kabupaten + ", " + userAddress.Provinsi + ", " + userAddress.KodePos
 	return &pb.AddUserAddressResponse{Message: &msg, ID: &id, AlamatLengkap: &alamat}, nil
 }
+
+func (u *UserAddressService) GetUserAddresses(ctx context.Context, data *pb.GetUserAddressesRequest) (*pb.GetUserAddressesResponse, error) {
+	userID := data.GetUserID()
+
+	userAddresses, err := u.UserAddressRepository.FindUserAddresses(ctx, userID)
+
+	msg := "Berhasil mendapatkan alamat"
+	if err != nil {
+		msg = fmt.Sprintf("Gagal mendapatkan alamat: %v", err.Error())
+		return &pb.GetUserAddressesResponse{Message: &msg}, err
+	}
+
+	var userAddressesResp []*pb.UserAddress
+	for _, userAddress := range userAddresses {
+		userAddressesResp = append(userAddressesResp, &pb.UserAddress{
+			ID:            &userAddress.ID,
+			AlamatLengkap: &userAddress.AlamatLengkap,
+		})
+	}
+
+	return &pb.GetUserAddressesResponse{Message: &msg, UserAddresses: userAddressesResp}, nil
+}

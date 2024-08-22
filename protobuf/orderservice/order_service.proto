@@ -6,6 +6,7 @@ package orderservice;
 
 service OrderService {
     rpc AddUserAddress(AddUserAddressRequest) returns (AddUserAddressResponse) {}
+    rpc GetUserAddresses(GetUserAddressesRequest) returns (GetUserAddressesResponse) {}
 }
 
 message AddUserAddressRequest {
@@ -22,4 +23,18 @@ message AddUserAddressResponse {
     string Message = 1;
     int32 ID = 2;
     string AlamatLengkap = 3;
+}
+
+message GetUserAddressesRequest {
+    int32 UserID = 1;
+}
+
+message UserAddress {
+    int32 ID = 1;
+    string AlamatLengkap = 2;
+}
+
+message GetUserAddressesResponse {
+    string Message = 1;
+    repeated UserAddress UserAddresses = 2;
 }

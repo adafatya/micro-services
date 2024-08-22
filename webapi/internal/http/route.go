@@ -24,6 +24,7 @@ func (config *RouteConfig) Setup() {
 	login := v1
 	login.Use(middleware.LoggedIn())
 	login.POST("user/address", config.UserAddressHandler.AddUserAddress)
+	login.GET("user/addresses", config.UserAddressHandler.GetUserAddresses)
 
 	admin := v1.Group("admin")
 	admin.Use(middleware.AdminOnly())

@@ -23,3 +23,7 @@ func NewOrderServiceServer(userAddressService *services.UserAddressService) *Ord
 func (o *OrderServiceServer) AddUserAddress(ctx context.Context, in *pb.AddUserAddressRequest) (*pb.AddUserAddressResponse, error) {
 	return o.UserAddressService.AddAddress(ctx, in)
 }
+
+func (o *OrderServiceServer) GetUserAddresses(ctx context.Context, in *pb.GetUserAddressesRequest) (*pb.GetUserAddressesResponse, error) {
+	return o.UserAddressService.GetUserAddresses(ctx, in)
+}

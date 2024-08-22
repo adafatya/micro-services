@@ -36,3 +36,15 @@ func (u *UserAddressHandler) AddUserAddress(c *gin.Context) {
 
 	c.JSON(http.StatusOK, resp)
 }
+
+func (u *UserAddressHandler) GetUserAddresses(c *gin.Context) {
+	userID := c.GetInt("user_id")
+
+	resp, err := u.UserAddressService.GetUserAddresses(c, int32(userID))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, resp)
+		return
+	}
+
+	c.JSON(http.StatusOK, resp)
+}

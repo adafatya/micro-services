@@ -15,3 +15,13 @@ type AddUserAddressResponse struct {
 	ID            int    `json:"id"`
 	AlamatLengkap string `json:"alamat_lengkap"`
 }
+
+type UserAddress struct {
+	ID            int    `json:"id"`
+	AlamatLengkap string `json:"alamat_lengkap"`
+}
+
+type GetUserAddressesResponse struct {
+	Message       string        `json:"message"`
+	UserAddresses []UserAddress `json:"user_addresses"`
+}
