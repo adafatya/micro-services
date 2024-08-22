@@ -1,0 +1,25 @@
+edition = "2023";
+
+option go_package = "./orderservice";
+
+package orderservice;
+
+service OrderService {
+    rpc AddUserAddress(AddUserAddressRequest) returns (AddUserAddressResponse) {}
+}
+
+message AddUserAddressRequest {
+    int32 UserID = 1;
+    string Alamat = 2;
+    string KodePos = 3;
+    string Kelurahan = 4;
+    string Kecamatan = 5;
+    string Kabupaten = 6;
+    string Provinsi = 7;
+}
+
+message AddUserAddressResponse {
+    string Message = 1;
+    int32 ID = 2;
+    string AlamatLengkap = 3;
+}

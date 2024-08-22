@@ -7,6 +7,7 @@ import (
 
 	"github.com/adafatya/micro-services/webapi/internal/proto/authservice"
 	"github.com/adafatya/micro-services/webapi/internal/proto/inventoryservice"
+	"github.com/adafatya/micro-services/webapi/internal/proto/orderservice"
 )
 
 func NewAuthServiceClient() authservice.AuthServiceClient {
@@ -29,6 +30,18 @@ func NewInventoryServiceClient() inventoryservice.InventoryServiceClient {
 	}
 
 	c := inventoryservice.NewInventoryServiceClient(conn)
+
+	return c
+}
+
+func NewOrderServiceClient() orderservice.OrderServiceClient {
+	orderServiceAddr := util.GetEnv("ORDER_SERVICE_ADDR", "")
+	conn, err := grpc.NewClient(orderServiceAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		panic(err)
+	}
+
+	c := orderservice.NewOrderServiceClient(conn)
 
 	return c
 }

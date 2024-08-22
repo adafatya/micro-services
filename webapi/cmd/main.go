@@ -7,6 +7,7 @@ import (
 func main() {
 	authServiceClient := config.NewAuthServiceClient()
 	inventoryServiceClient := config.NewInventoryServiceClient()
+	orderServiceClient := config.NewOrderServiceClient()
 
 	app := config.NewGinApp()
 
@@ -16,6 +17,7 @@ func main() {
 		App:                    app,
 		AuthServiceClient:      authServiceClient,
 		InventoryServiceClient: inventoryServiceClient,
+		OrderServiceClient:     orderServiceClient,
 		GCSBucket:              gcsBucket,
 	})
 
