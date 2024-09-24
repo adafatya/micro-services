@@ -51,3 +51,27 @@ func (p *ProductRepository) Find(ctx context.Context, query *pb.GetProductsReque
 
 	return products, nil
 }
+
+func (p *ProductRepository) Buy(ctx context.Context, products []models.Product) (int64, error) {
+	var totalPrice int64
+	totalPrice = 0
+
+	for i := 0; i < len(products); i++ {
+		product := models.Product{
+			ID: products[i].ID,
+		}
+
+		if err := p.DB.WithContext(ctx).First(&product).Error; err != nil {
+			return 0, err
+		}
+
+		product.Quantity = product.Quantity - products[i].Quantity
+		if err := p.DB.WithContext(ctx).Save(&product).Error; err != nil {
+			return 0, err
+		}
+
+		totalPrice += int64(products[i].Quantity * product.Price)
+	}
+
+	return totalPrice, nil
+}

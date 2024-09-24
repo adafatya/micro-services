@@ -12,6 +12,7 @@ type RouteConfig struct {
 	UserHandler        *handlers.UserHandler
 	ProductHandler     *handlers.ProductHandler
 	UserAddressHandler *handlers.UserAddressHandler
+	OrderHandler       *handlers.OrderHandler
 }
 
 func (config *RouteConfig) Setup() {
@@ -21,7 +22,6 @@ func (config *RouteConfig) Setup() {
 	v1.POST("register", config.UserHandler.Register)
 	v1.POST("login", config.UserHandler.Login)
 
-
 	v1.GET("products", config.ProductHandler.GetProducts)
 
 	login := v1
@@ -29,6 +29,7 @@ func (config *RouteConfig) Setup() {
 	login.POST("user/address", config.UserAddressHandler.AddUserAddress)
 	login.GET("user/addresses", config.UserAddressHandler.GetUserAddresses)
 
+	login.POST("order", config.OrderHandler.CreateOrder)
 
 	admin := v1.Group("admin")
 	admin.Use(middleware.AdminOnly())

@@ -33,3 +33,8 @@ type GetProductsResponse struct {
 	Message  string            `json:"message"`
 	Products []ProductResponse `json:"products"`
 }
+
+type CreateOrderProductRequest struct {
+	ID       int `json:"id"`
+	Quantity int `json:"quantity"`
+}

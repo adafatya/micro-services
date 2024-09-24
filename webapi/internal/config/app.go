@@ -27,11 +27,13 @@ func Bootstrap(config *BootstrapConfig) {
 	userService := services.NewUserService(config.AuthServiceClient)
 	productService := services.NewProductService(config.InventoryServiceClient, gcsRepository)
 	userAddressService := services.NewUserAddressService(config.OrderServiceClient)
+	orderService := services.NewOrderService(config.OrderServiceClient)
 
 	basicHandler := handlers.NewBasicHandler()
 	userHandler := handlers.NewUserHandler(userService)
 	productHandler := handlers.NewProductHandler(productService)
 	userAddressHandler := handlers.NewUserAddressHandler(userAddressService)
+	orderHandler := handlers.NewOrderHandler(orderService)
 
 	routeConfig := http.RouteConfig{
 		App:                config.App,
@@ -39,6 +41,7 @@ func Bootstrap(config *BootstrapConfig) {
 		UserHandler:        userHandler,
 		ProductHandler:     productHandler,
 		UserAddressHandler: userAddressHandler,
+		OrderHandler:       orderHandler,
 	}
 	routeConfig.Setup()
 }

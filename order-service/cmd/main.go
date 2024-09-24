@@ -13,9 +13,12 @@ func main() {
 
 	s := config.NewGRPCServer()
 
+	inventoryServiceclient := config.NewInventoryServiceClient()
+
 	config.Bootstrap(&config.BootstrapConfig{
-		DB:         db,
-		GRPCServer: s,
+		DB:                     db,
+		GRPCServer:             s,
+		InventoryServiceClient: inventoryServiceclient,
 	})
 
 	host := util.GetEnv("SERVER_HOST", "")

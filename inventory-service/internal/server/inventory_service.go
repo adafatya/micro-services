@@ -55,3 +55,7 @@ func (s *InventoryServiceServer) GetProducts(ctx context.Context, in *pb.GetProd
 
 	return &pb.GetProductsResponse{Message: &msg, Products: products}, err
 }
+
+func (s *InventoryServiceServer) BuyProducts(ctx context.Context, in *pb.BuyProductsRequest) (*pb.BuyProductsResponse, error) {
+	return s.ProductService.BuyProducts(ctx, in)
+}
