@@ -1,0 +1,56 @@
+edition = "2023";
+
+option go_package = "./orderservice";
+
+package orderservice;
+
+service OrderService {
+    rpc AddUserAddress(AddUserAddressRequest) returns (AddUserAddressResponse) {}
+    rpc GetUserAddresses(GetUserAddressesRequest) returns (GetUserAddressesResponse) {}
+    rpc CreateOrder(CreateOrderRequest) returns (MessageResponse) {}
+}
+
+message AddUserAddressRequest {
+    int32 UserID = 1;
+    string Alamat = 2;
+    string KodePos = 3;
+    string Kelurahan = 4;
+    string Kecamatan = 5;
+    string Kabupaten = 6;
+    string Provinsi = 7;
+}
+
+message AddUserAddressResponse {
+    string Message = 1;
+    int32 ID = 2;
+    string AlamatLengkap = 3;
+}
+
+message GetUserAddressesRequest {
+    int32 UserID = 1;
+}
+
+message UserAddress {
+    int32 ID = 1;
+    string AlamatLengkap = 2;
+}
+
+message GetUserAddressesResponse {
+    string Message = 1;
+    repeated UserAddress UserAddresses = 2;
+}
+
+message Product {
+    int32 ID = 1;
+    int32 Quantity = 2;
+}
+
+message CreateOrderRequest {
+    int32 UserID = 1;
+    int32 UserAddressID = 2;
+    repeated Product Products = 3;
+}
+
+message MessageResponse {
+    string Message = 1;
+}

@@ -5,9 +5,20 @@ import (
 )
 
 func main() {
+	authServiceClient := config.NewAuthServiceClient()
+	inventoryServiceClient := config.NewInventoryServiceClient()
+	orderServiceClient := config.NewOrderServiceClient()
+
 	app := config.NewGinApp()
+
+	gcsBucket := config.NewGCSBucket()
+
 	config.Bootstrap(&config.BootstrapConfig{
-		App: app,
+		App:                    app,
+		AuthServiceClient:      authServiceClient,
+		InventoryServiceClient: inventoryServiceClient,
+		OrderServiceClient:     orderServiceClient,
+		GCSBucket:              gcsBucket,
 	})
 
 	app.Run()

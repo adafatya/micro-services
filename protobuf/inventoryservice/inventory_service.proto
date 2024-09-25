@@ -1,0 +1,57 @@
+edition = "2023";
+
+option go_package = "./inventoryservice";
+
+package inventoryservice;
+
+service InventoryService {
+    rpc AddProduct (AddProductRequest) returns (MessageResponse) {}
+    rpc GetProducts (GetProductsRequest) returns (GetProductsResponse) {}
+    rpc BuyProducts (BuyProductsRequest) returns (BuyProductsResponse) {}
+}
+
+message ProductImage {
+    string ImagePath = 1;
+    bool IsThumbnail = 2;
+}
+
+message AddProductRequest {
+    string ProductName = 1;
+    string Description = 2;
+    int32 Price = 3;
+    int32 Quantity = 4;
+    repeated ProductImage ProductImages = 5;
+}
+
+message MessageResponse {
+    string Message = 1;
+}
+
+message Product {
+    int32 ID = 1;
+    string ProductName = 2;
+    int32 Price = 3;
+    int32 Quantity = 4;
+    string ThumbnailPath = 5;
+}
+
+message GetProductsRequest {
+    int32 Limit = 1;
+    int32 Offset = 2;
+    string Keyword = 3;
+    string Order = 4;
+}
+
+message GetProductsResponse {
+    string Message = 1;
+    repeated Product Products = 2;
+}
+
+message BuyProductsRequest {
+    repeated Product Products = 1;
+}
+
+message BuyProductsResponse {
+    string Message = 1;
+    int64 TotalPrice = 2;
+}
